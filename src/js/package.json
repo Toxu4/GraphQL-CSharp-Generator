@@ -1,0 +1,16 @@
+{
+  "name": "graphql.csharp.generator",
+  "version": "1.0.1-alpha",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "gql-gen-csharp": "gql-gen --config ./default.yml"
+  },
+  "author": "Toxu4",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^14.1.1",
+    "graphql-code-generator": "^0.17.0",
+    "handlebars": "^4.1.0"
+  }
+}

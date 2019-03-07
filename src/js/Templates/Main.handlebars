@@ -1,0 +1,19 @@
+{{#if config.printTime }}
+/** Generated in {{ currentTime }} */
+{{/if}}
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace {{ @root.config.namespace }}
+{
+{{#each querySetInterfaces}}
+    {{> Interface this}}
+{{/each}}
+                                
+{{#each queryClasses }}
+    {{> Class this}}    
+{{#unless @last}}
+
+{{/unless}}        
+{{/each}}
+}

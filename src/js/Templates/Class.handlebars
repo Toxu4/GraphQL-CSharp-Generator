@@ -1,0 +1,27 @@
+{{ accessModifier }}{{#if isAbstract}} abstract{{/if}} class {{name}}{{#if parentClass}}: {{ parentClass}}{{#if implementedInterfaces}}, {{/if}}{{/if}}{{#if implementedInterfaces}}{{#unless parentClass}}: {{/unless}}{{#each implementedInterfaces}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}{{/if}}
+{
+    // Nested classes
+    {{#each nestedClasses}}
+    {{> Class this}}
+    {{/each}}
+
+    // Nested interfaces
+    {{#each nestedInterfaces}}
+    {{> Interface this}}
+    {{/each}}
+
+    // Fields
+    {{#each fields}}
+    {{> Field this}}
+    {{/each}}
+
+    // Properties
+    {{#each properties}}
+    {{> Property this}}
+    {{/each}}
+
+    // Methods
+    {{#each methods}}
+    {{> Method this}}
+    {{/each}}
+}

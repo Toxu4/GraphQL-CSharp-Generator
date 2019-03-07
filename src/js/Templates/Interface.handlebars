@@ -1,0 +1,8 @@
+{{ accessModifier }} interface {{name}}
+{
+    // Methods
+{{#each methods}}
+    {{> InterfaceMethod this}}
+{{/each}}
+}
+
