@@ -18,3 +18,11 @@ use cli to generate c# code:
 ```
 gql-gen-csharp -s .\schema.json -d .\Queries\*.graphql -o .\Generated.cs -n MyProject.GraphQl
 ```
+
+
+## limitations
+
+There are some query limitations. 
+
+- does not support interfaces
+- does not support mutations
