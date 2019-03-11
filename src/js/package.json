@@ -1,17 +1,18 @@
 {
   "name": "graphql.csharp.generator",
-  "version": "1.0.4-alpha",
+  "version": "1.0.8-alpha",
   "description": "",
   "main": "",
-  "bin": { "gql-gen-csharp" : "index.js" },
-  "scripts": {    
-    "gen": "gql-gen"
+  "bin": {
+    "gql-gen-csharp": "./index.js"
   },
   "author": "Toxu4",
   "license": "MIT",
   "dependencies": {
+    "commander": "^2.19.0",
     "graphql": "^14.1.1",
     "graphql-code-generator": "^0.17.0",
-    "handlebars": "^4.1.0"
+    "handlebars": "^4.1.0",
+    "tmp": "0.0.33"
   }
 }

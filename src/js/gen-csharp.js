@@ -3,8 +3,8 @@ const { transformDocumentsFiles } = require('graphql-codegen-core');
 const Handlebars = require('Handlebars');
 const fs = require('fs');
 
-const mainTemplate = fs.readFileSync('./Templates/Main.handlebars');
-const files = fs.readdirSync('./Templates/');
+const mainTemplate = fs.readFileSync(`${__dirname}/Templates/Main.handlebars`);
+const files = fs.readdirSync(`${__dirname}/Templates/`);
 
 Handlebars.registerHelper('currentTime', function() {
   var now     = new Date();
@@ -43,7 +43,7 @@ files.forEach(f => {
   }
 
   if (f != 'Main.handlebars'){
-    const partial = fs.readFileSync('./Templates/' + f);
+    const partial = fs.readFileSync(`${__dirname}/Templates/${f}`);
     Handlebars.registerPartial(f.split('.')[0], '' + partial);
   }
 });
