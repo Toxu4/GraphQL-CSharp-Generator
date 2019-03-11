@@ -8,7 +8,12 @@
   },
   "author": "Toxu4",
   "license": "MIT",
-  "keywords": ["graphql","c#","csharp","codegen"],
+  "keywords": [
+    "graphql",
+    "c#",
+    "csharp",
+    "codegen"
+  ],
   "dependencies": {
     "commander": "^2.19.0",
     "graphql": "^14.1.1",
@@ -17,7 +22,10 @@
     "tmp": "0.0.33"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Toxu4/GraphQL-CSharp-Generator"
+    "type": "git",
+    "url": "https://github.com/Toxu4/GraphQL-CSharp-Generator"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1"
   }
 }

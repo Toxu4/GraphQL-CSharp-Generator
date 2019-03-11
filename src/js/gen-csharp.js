@@ -1,12 +1,12 @@
-const { transformDocumentsFiles } = require('graphql-codegen-core');
+const { transformDocumentsFiles } = require("graphql-codegen-core");
 
-const Handlebars = require('Handlebars');
-const fs = require('fs');
+const Handlebars = require("Handlebars");
+const fs = require("fs");
 
 const mainTemplate = fs.readFileSync(`${__dirname}/Templates/Main.handlebars`);
 const files = fs.readdirSync(`${__dirname}/Templates/`);
 
-Handlebars.registerHelper('currentTime', function() {
+Handlebars.registerHelper("currentTime", function() {
   var now     = new Date();
   var year    = now.getFullYear();
   var month   = now.getMonth()+1;
@@ -14,41 +14,41 @@ Handlebars.registerHelper('currentTime', function() {
   var hour    = now.getHours();
   var minute  = now.getMinutes();
   var second  = now.getSeconds();
-  if(month.toString().length == 1) {
-    month = '0'+month;
+  if (month.toString().length == 1) {
+    month = "0"+month;
   }
-  if(day.toString().length == 1) {
-    day = '0'+day;
+  if (day.toString().length == 1) {
+    day = "0"+day;
   }
-  if(hour.toString().length == 1) {
-    hour = '0'+hour;
+  if (hour.toString().length == 1) {
+    hour = "0"+hour;
   }
-  if(minute.toString().length == 1) {
-    minute = '0'+minute;
+  if (minute.toString().length == 1) {
+    minute = "0"+minute;
   }
-  if(second.toString().length == 1) {
-    second = '0'+second;
+  if (second.toString().length == 1) {
+    second = "0"+second;
   }
-  var dateTime = year+'/'+month+'/'+day+' '+hour+':'+minute+':'+second;
+  var dateTime = year+"/"+month+"/"+day+" "+hour+":"+minute+":"+second;
   return dateTime;
 });
 
-Handlebars.registerHelper('json',  function(data) {
+Handlebars.registerHelper("json",  function(data) {
   return data ? JSON.stringify(data) : "[undefined]";
 });
         
 files.forEach(f => {
-  if (!f.endsWith('.handlebars')){
+  if (!f.endsWith(".handlebars")) {
     return;
   }
 
-  if (f != 'Main.handlebars'){
+  if (f != "Main.handlebars") {
     const partial = fs.readFileSync(`${__dirname}/Templates/${f}`);
-    Handlebars.registerPartial(f.split('.')[0], '' + partial);
+    Handlebars.registerPartial(f.split(".")[0], "" + partial);
   }
 });
 
-const compile = Handlebars.compile('' + mainTemplate);    
+const compile = Handlebars.compile("" + mainTemplate);    
 
 module.exports = {  
     plugin: (schema, documents, config) => {
@@ -61,12 +61,12 @@ module.exports = {
 
       return compile(apiClasses);
     }
-}
+};
 
-function makeApiClasses(documents){
+function makeApiClasses(documents) {
     
   const queryClasses = documents.operations.map(operation => {
-    let queryClass = createClassBlank(
+    const queryClass = createClassBlank(
       `${firstUpper(operation.name)}Query`, 
       {
         originalFile : operation.originalFile
@@ -77,10 +77,10 @@ function makeApiClasses(documents){
     queryClass.nestedClasses.push(getQueryResultClass(operation, documents));
     queryClass.properties.push(getQueryTextProperty(operation, documents));
     
-    let variablesProperties = getVariablesProperties(operation, documents);
+    const variablesProperties = getVariablesProperties(operation);
     variablesProperties.forEach(p => queryClass.properties.push(p));
 
-    addConstructor(queryClass, operation, documents);
+    addConstructor(queryClass, operation);
     
     return queryClass;
   });
@@ -89,12 +89,12 @@ function makeApiClasses(documents){
   
   groupBy(queryClasses, qc => qc.originalFile)
     .forEach(qcg => {
-      let fileName = qcg[0].originalFile.match(/(.*\/)?(.*?)\.graphql/i)[2];
+      const fileName = qcg[0].originalFile.match(/(.*\/)?(.*?)\.graphql/i)[2];
 
-      let interface = createInterfaceBlank(`I${firstUpper(fileName)}Processor`);
+      const interface = createInterfaceBlank(`I${firstUpper(fileName)}Processor`);
       
       qcg.forEach(qc => {
-        let method = createMethodBlank(
+        const method = createMethodBlank(
           qc.name.match(/(.*)Query/)[1],
           {
             resultType: `Task<QueryResult<${qc.name}.Result>>`,
@@ -108,41 +108,41 @@ function makeApiClasses(documents){
       });
 
       querySetInterfaces.push(interface);
-    })
+    });
   
   return {
     config : documents.config,
     queryClasses,
     querySetInterfaces
-  }
+  };
 }
 
-function getQueryResultClass(operation, documents){
-  let queryResultClass =  createClassBlank("Result");
+function getQueryResultClass(operation, documents) {
+  const queryResultClass =  createClassBlank("Result");
   
   fillResultClassMembers(queryResultClass, operation.selectionSet, documents);
   
   return queryResultClass;
 }
 
-function getQueryTextProperty(operation, documents){
-  let queryParts = [operation.document];
+function getQueryTextProperty(operation, documents) {
+  const queryParts = [operation.document];
 
   getUsedFragments(operation, documents)
     .forEach(f => queryParts.push(f.document));
   
-  let queryTextProperty = createPropertyBlank(
+  const queryTextProperty = createPropertyBlank(
     "string", 
     "QueryText", 
     {
-      initialValue : `\n@"\n${queryParts.join('\n')}\n"` 
+      initialValue : `\n@"\n${queryParts.join("\n")}\n"` 
     });
   
   return queryTextProperty;
 }
 
-function getVariablesProperties(operation, documents){
-  let res = 
+function getVariablesProperties(operation) {
+  const res = 
       [
         createPropertyBlank(
           "IDictionary<string, object>",
@@ -152,9 +152,7 @@ function getVariablesProperties(operation, documents){
               "new Dictionary<string, object>\n" +
               "{\n" +
                 operation.variables
-                  .map(o => {
-                    return `\t{ "${o.name}", null }`
-                  })
+                  .map(o => `\t{ "${o.name}", null }`)
                   .join(",\n") +              
               "\n}"
           })
@@ -168,59 +166,57 @@ function getVariablesProperties(operation, documents){
         getter: `get => (${getCsharpType(v)})Variables["${v.name}"];`,
         setter: `set => Variables["${v.name}"] = value;`
       }
-    ))
+    ));
   });
   
   return res;
 }
 
-function addConstructor(queryClass, operation, documents) {
-  let constructor = createMethodBlank(
+function addConstructor(queryClass, operation) {
+  const ctor = createMethodBlank(
     queryClass.name,
     {
       isConstructor : true
-    })
+    });
   
   operation.variables.forEach(v =>{
-    let parameter = createParameterBlank(
+    const parameter = createParameterBlank(
       getCsharpType(v), 
       v.name, 
       {
         isRequired: v.isRequired  
       });
     
-    constructor.parameters.push(parameter);
-    constructor.body.push(`${firstUpper(v.name)} = ${v.name};`)
+    ctor.parameters.push(parameter);
+    ctor.body.push(`${firstUpper(v.name)} = ${v.name};`);
   });
   
-  constructor.parameters.sort((p1, p2) => {
-    if (p1.isRequired && p2.isRequired){
+  ctor.parameters.sort((p1, p2) => {
+    if (p1.isRequired && p2.isRequired) {
       return 0;
     }
-    if (p1.isRequired){
-      return -1
-    }
-    return 1;
-  })
+
+    return p1.isRequired ? -1 : 1;
+  });
   
-  queryClass.methods.push(constructor);
+  queryClass.methods.push(ctor);
 }
 
-function fillResultClassMembers(resultClass, selectionSet, documents){
-  if (!selectionSet){
+function fillResultClassMembers(resultClass, selectionSet, documents) {
+  if (!selectionSet) {
     return;
   }
   
   selectionSet.forEach(s => {
-    if (s.isType || s.isUnion){
-      let nestedClassName = `${firstUpper(s.name)}Result`;
-      let nestedClass = createClassBlank(
+    if (s.isType || s.isUnion) {
+      const nestedClassName = `${firstUpper(s.name)}Result`;
+      const nestedClass = createClassBlank(
         nestedClassName, 
         { 
           isAbstract : s.isUnion 
         });
       
-      resultClass.nestedClasses.push(nestedClass)
+      resultClass.nestedClasses.push(nestedClass);
       resultClass.properties.push(
         createPropertyBlank(
           nestedClassName,
@@ -228,43 +224,42 @@ function fillResultClassMembers(resultClass, selectionSet, documents){
           {
             isArray : s.isArray
           }
-        ))
+        ));
 
-      if (!s.isUnion){
+      if (!s.isUnion) {
         fillResultClassMembers(nestedClass, s.selectionSet, documents);  
       }
-      else 
-      {
+      else {
         fillUnionResultClassMembers(resultClass, nestedClass, s.selectionSet, documents);
       }
     }
-    else if (s.isField){
+    else if (s.isField) {
       resultClass.properties.push(
         createPropertyBlank(
           getCsharpType(s),
           firstUpper(s.name)
-        ))
+        ));
     }
-    else if (s.isFragmentSpread){
-      let fragment = documents.fragments.find(f => f.name == s.fragmentName);
+    else if (s.isFragmentSpread) {
+      const fragment = documents.fragments.find(f => f.name == s.fragmentName);
 
-      fillResultClassMembers(resultClass, fragment.selectionSet, documents)
+      fillResultClassMembers(resultClass, fragment.selectionSet, documents);
     }
-  })
+  });
 }
 
-function fillUnionResultClassMembers(resultClass, unionClass, selectionSet, documents){
-  if (!selectionSet){
+function fillUnionResultClassMembers(resultClass, unionClass, selectionSet, documents) {
+  if (!selectionSet) {
     return;
   }
 
   selectionSet.forEach(s =>{
-    let unionClassPart = createClassBlank(`${s.onType}Result`, { parentClass: unionClass.name });
+    const unionClassPart = createClassBlank(`${s.onType}Result`, { parentClass: unionClass.name });
     
     fillResultClassMembers(unionClassPart, s.selectionSet, documents);
     
     resultClass.nestedClasses.push(unionClassPart);
-  })
+  });
 
   unionClass.properties.push(
     createPropertyBlank(
@@ -273,7 +268,7 @@ function fillUnionResultClassMembers(resultClass, unionClass, selectionSet, docu
 }
 
 function getUsedFragments(operation, documents) {
-  let allFragments = 
+  const allFragments = 
     getSelectionSets(operation)
       .filter(s => s.isFragmentSpread)
       .map(s => s.fragmentName)
@@ -284,9 +279,8 @@ function getUsedFragments(operation, documents) {
       .filter(f => allFragments.includes(f.name));
 }
 
-function getSelectionSets(root) 
-{
-  if (!root.selectionSet){
+function getSelectionSets(root) {
+  if (!root.selectionSet) {
     return [];
   }
   
@@ -298,17 +292,17 @@ function getSelectionSets(root)
         .flatMap(s => getSelectionSets(s)));
 }
 
-function createInterfaceBlank(name, options){
+function createInterfaceBlank(name, options) {
   options = options || {};
 
   return {
     accessModifier : options.accessModifier || "public",
     name: name,
     methods: []
-  }
+  };
 }
 
-function createClassBlank(name, options){
+function createClassBlank(name, options) {
   options = options || {};
   
   return {
@@ -326,10 +320,10 @@ function createClassBlank(name, options){
     methods: [],
 
     originalFile: options.originalFile
-  }
+  };
 }
 
-function createPropertyBlank(type, name, options){
+function createPropertyBlank(type, name, options) {
   options = options || {};
   
   return {
@@ -340,10 +334,10 @@ function createPropertyBlank(type, name, options){
     setter: options.setter || "set;",
     initialValue: options.initialValue,
     isArray: options.isArray
-  }
+  };
 }
 
-function createMethodBlank(name, options){
+function createMethodBlank(name, options) {
   options = options || {};
 
   return {
@@ -353,10 +347,10 @@ function createMethodBlank(name, options){
     isConstructor: options.isConstructor,
     parameters: options.parameters || [],    
     body: options.body || []
-  }
+  };
 }
 
-function createParameterBlank(type, name, options){
+function createParameterBlank(type, name, options) {
   options = options || {};
 
   return {
@@ -365,29 +359,31 @@ function createParameterBlank(type, name, options){
     isRequired: options.isRequired,
     isOut: options.isOut,
     isArray: options.isArray
-  }
+  };
 }
 
-function firstUpper(value){
-  return value.replace(/(\w)(\w*)/g, function(g0,g1,g2){return g1.toUpperCase() + g2;});
+function firstUpper(value) {
+  return value.replace(/(\w)(\w*)/g, function(g0, g1, g2) {
+return g1.toUpperCase() + g2;
+});
 }
 
 function getCsharpType(v) {
 
   const typeMapping = {
-    "String" : 'string',
-    "Int" : 'int',
-    "Float" : 'float',
-    "Boolean" : 'bool',
-    "ID" : 'string',
-  }
+    "String" : "string",
+    "Int" : "int",
+    "Float" : "float",
+    "Boolean" : "bool",
+    "ID" : "string",
+  };
 
   let res = typeMapping[v.type];
 
-  if (v.isArray){
-    res = `${res}[]`
+  if (v.isArray) {
+    res = `${res}[]`;
   }
-  else if (!v.isRequired && v.type != 'String'){
+  else if (!v.isRequired && v.type != "String") {
     res = `${res}?`;
   }
 
@@ -401,9 +397,11 @@ function groupBy(list, keyGetter) {
     const collection = map.get(key);
     if (!collection) {
       map.set(key, [item]);
-    } else {
+    }
+    else {
       collection.push(item);
     }
   });
+
   return map;
 }

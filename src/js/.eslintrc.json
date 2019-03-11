@@ -1,0 +1,36 @@
+{
+    "env": {
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "no-console": "off",
+        "semi": ["error", "always"],
+        "quotes": ["error", "double"],
+        "brace-style": ["error", "stroustrup"],
+        "curly": [1, "multi-line"],
+        "comma-spacing": ["error", {"before": false, "after": true}],
+        "space-before-function-paren": ["error", {
+            "asyncArrow": "always",
+            "named": "never",
+            "anonymous": "never"
+          }],
+        "object-curly-spacing":  ["error", "always"],
+        "space-before-blocks": 2,
+        "prefer-const": ["error", {"destructuring": "all"}],
+        "keyword-spacing": ["error", {
+            "after": true,
+            "before": true
+          }],
+        "linebreak-style": ["error", "unix"]
+    }
+}
