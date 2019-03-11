@@ -1,18 +1,23 @@
 {
   "name": "graphql.csharp.generator",
-  "version": "1.0.8-alpha",
-  "description": "",
+  "version": "1.0.9-alpha",
+  "description": "C# code generator for GraphQL schema and query",
   "main": "",
   "bin": {
     "gql-gen-csharp": "./index.js"
   },
   "author": "Toxu4",
   "license": "MIT",
+  "keywords": ["graphql","c#","cshapr","codegen"],
   "dependencies": {
     "commander": "^2.19.0",
     "graphql": "^14.1.1",
     "graphql-code-generator": "^0.17.0",
     "handlebars": "^4.1.0",
     "tmp": "0.0.33"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Toxu4/GraphQL-CSharp-Generator"
   }
 }
