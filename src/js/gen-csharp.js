@@ -77,8 +77,8 @@ function makeApiClasses(documents) {
     queryClass.nestedClasses.push(getQueryResultClass(operation, documents));
     queryClass.properties.push(getQueryTextProperty(operation, documents));
     
-    const variablesProperties = getVariablesProperties(operation);
-    variablesProperties.forEach(p => queryClass.properties.push(p));
+    getVariablesProperties(operation)
+      .forEach(p => queryClass.properties.push(p));
 
     addConstructor(queryClass, operation);
     
