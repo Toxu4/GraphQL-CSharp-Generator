@@ -1,4 +1,4 @@
-{{accessModifier}}{{#unless isConstructor}} {{{resultType}}}{{/unless}} {{name}}({{#each parameters}}{{> Parameter this}}{{#unless @last}}, {{/unless}}{{/each}})
+{{accessModifier}}{{#unless isConstructor}} {{{resultType}}}{{/unless}} {{name}}({{#if isExtension}}this {{/if}}{{#each parameters}}{{> Parameter this}}{{#unless @last}}, {{/unless}}{{/each}})
 { 
 {{#if body}}
     {{#each body}}

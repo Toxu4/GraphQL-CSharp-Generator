@@ -86,12 +86,42 @@ function makeApiClasses(documents) {
   });
   
   const querySetInterfaces = [];
+  const querySetImplementations = [];
+  const registrationExtensionsClass = createClassBlank(
+      "RegistrationExtensions", 
+      {
+          accessModifier: "public static",
+          methods: [ createMethodBlank(
+              "AddGeneratedQueries",
+              {
+                  accessModifier: "public static",
+                  isExtension: true,
+                  resultType: "IServiceCollection",
+                  parameters: [createParameterBlank("IServiceCollection", "serviceCollection", { isRequired: true })]
+              })]
+      });
   
   groupBy(queryClasses, qc => qc.originalFile)
     .forEach(qcg => {
       const fileName = qcg[0].originalFile.match(/(.*\/)?(.*?)\.graphql/i)[2];
 
-      const interface = createInterfaceBlank(`I${firstUpper(fileName)}Processor`);
+      const interface = createInterfaceBlank(`I${firstUpper(fileName)}`);
+      const implementation = createClassBlank(`${firstUpper(fileName)}`, { accessModifier: "internal" });
+
+      registrationExtensionsClass.methods[0].body.push(`serviceCollection.AddSingleton<${interface.name}, ${implementation.name}>();`)
+      
+      implementation.implementedInterfaces.push(interface.name);
+      implementation.fields. push(createFieldBlank("IGraphQlQueryExecutor", "_graphQlQueryExecutor"));
+      
+      const ctor = createMethodBlank(
+          implementation.name,
+          {
+              isConstructor : true,
+              parameters: [createParameterBlank("IGraphQlQueryExecutor", "graphQlQueryExecutor")],
+              body: ["_graphQlQueryExecutor = graphQlQueryExecutor;"]
+          });
+      
+      implementation.methods.push(ctor);
       
       qcg.forEach(qc => {
         const method = createMethodBlank(
@@ -101,19 +131,26 @@ function makeApiClasses(documents) {
             parameters:
             [
               createParameterBlank(qc.name, "query", { isRequired: true })
-            ]
+            ],
+            body: [`return _graphQlQueryExecutor.Run<${qc.name},QueryResult<${qc.name}.Result>>(query);`]
           });
         
         interface.methods.push(method);
+        implementation.methods.push(method);
       });
 
       querySetInterfaces.push(interface);
+      querySetImplementations.push(implementation);
     });
+
+  registrationExtensionsClass.methods[0].body.push("return serviceCollection;");  
   
   return {
     config : documents.config,
     queryClasses,
-    querySetInterfaces
+    querySetInterfaces,
+    querySetImplementations,
+    registrationExtensionsClass
   };
 }
 
@@ -317,10 +354,22 @@ function createClassBlank(name, options) {
     nestedInterfaces: [],
     fields: [],
     properties: [],
-    methods: [],
+    methods: options.methods || [],
 
     originalFile: options.originalFile
   };
+}
+
+function createFieldBlank(type, name, options) {
+    options = options || {};
+
+    return {
+        accessModifier : options.accessModifier || "private readonly",
+        type: type,
+        name: name,
+        initialValue: options.initialValue,
+        isArray: options.isArray
+    };
 }
 
 function createPropertyBlank(type, name, options) {
@@ -345,6 +394,7 @@ function createMethodBlank(name, options) {
     resultType: options.resultType || "void",
     name: name,
     isConstructor: options.isConstructor,
+    isExtension: options.isExtension,  
     parameters: options.parameters || [],    
     body: options.body || []
   };

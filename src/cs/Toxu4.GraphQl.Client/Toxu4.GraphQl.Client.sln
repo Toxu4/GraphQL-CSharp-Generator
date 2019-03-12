@@ -2,6 +2,26 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toxu4.GraphQl.Client", "Toxu4.GraphQl.Client.csproj", "{8D8AAC76-EECE-44B1-B3C8-C868D08572DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{1007ABB4-E098-44FB-A02F-49E805BC5D68}"
+ProjectSection(SolutionItems) = preProject
+	..\..\js\gen-csharp.js = ..\..\js\gen-csharp.js
+	..\..\js\index.js = ..\..\js\index.js
+	..\..\js\package.json = ..\..\js\package.json
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{4440DCC1-F456-462C-8A53-6CF9E7032960}"
+ProjectSection(SolutionItems) = preProject
+	..\..\js\Templates\Class.handlebars = ..\..\js\Templates\Class.handlebars
+	..\..\js\Templates\config.handlebars = ..\..\js\Templates\config.handlebars
+	..\..\js\Templates\Field.handlebars = ..\..\js\Templates\Field.handlebars
+	..\..\js\Templates\Interface.handlebars = ..\..\js\Templates\Interface.handlebars
+	..\..\js\Templates\InterfaceMethod.handlebars = ..\..\js\Templates\InterfaceMethod.handlebars
+	..\..\js\Templates\Main.handlebars = ..\..\js\Templates\Main.handlebars
+	..\..\js\Templates\Method.handlebars = ..\..\js\Templates\Method.handlebars
+	..\..\js\Templates\Parameter.handlebars = ..\..\js\Templates\Parameter.handlebars
+	..\..\js\Templates\Property.handlebars = ..\..\js\Templates\Property.handlebars
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +32,8 @@ Global
 		{8D8AAC76-EECE-44B1-B3C8-C868D08572DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D8AAC76-EECE-44B1-B3C8-C868D08572DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D8AAC76-EECE-44B1-B3C8-C868D08572DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4440DCC1-F456-462C-8A53-6CF9E7032960} = {1007ABB4-E098-44FB-A02F-49E805BC5D68}
 	EndGlobalSection
 EndGlobal

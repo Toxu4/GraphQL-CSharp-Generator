@@ -3,13 +3,27 @@
 {{/if}}
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Toxu4.GraphQl.Client;
 
 namespace {{ @root.config.namespace }}
 {
 {{#each querySetInterfaces}}
     {{> Interface this}}
+    {{#unless @last}}
+
+    {{/unless}}
 {{/each}}
-                                
+
+    {{> Class registrationExtensionsClass }}
+
+{{#each querySetImplementations}}
+    {{> Class this}}
+    {{#unless @last}}
+
+    {{/unless}}
+{{/each}}
+
 {{#each queryClasses }}
     {{> Class this}}    
 {{#unless @last}}
