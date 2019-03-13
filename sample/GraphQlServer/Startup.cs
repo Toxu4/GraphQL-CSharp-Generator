@@ -1,31 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GraphQlServer.Schema;
+using GraphQlServer.Schema.Types;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GraphQlServer
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+                .AddGraphQL(options =>
+                    {
+                        options.EnableMetrics = true;
+                        options.ExposeExceptions = true;
+                    })
+                .AddDataLoader();
+            
+            services.AddSingleton<IDependencyResolver>(
+                c => new FuncDependencyResolver(c.GetService));
+            
+            //            
+            services.AddSingleton<ComputerSchema>();
+            services.AddSingleton<ComputerQuery>();
+            services.AddSingleton<DriveQuery>();
+            services.AddSingleton<DriveType>();
+            services.AddSingleton<FolderOrFileType>();
+            services.AddSingleton<FolderType>();
+            services.AddSingleton<FileType>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseWebSockets();
 
-            app.Run(async (context) => { await context.Response.WriteAsync("Hello World!"); });
+            app.UseGraphQL<ComputerSchema>();
+
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
         }
     }
 }
