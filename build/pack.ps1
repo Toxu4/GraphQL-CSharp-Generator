@@ -43,4 +43,4 @@ foreach ($project in $projects) {
 Write-Host "stored", $storedPath
 Set-Location $storedPath
 
-dir *.*
+dir ./nupkg
