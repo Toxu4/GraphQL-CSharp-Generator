@@ -25,7 +25,7 @@ install:
 
 before_build:
 - ps: >-
-    cd src/cs
+    cd src/cs/Toxu4.GraphQl.Client
     
     dotnet restore -v Minimal
 
@@ -38,7 +38,7 @@ test_script:
 
 after_test:
 - ps: >-    
-    cd ../..
+    cd ../../..
 
     md -Name nupkg
 
