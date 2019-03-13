@@ -267,7 +267,7 @@ function fillResultClassMembers(resultClass, selectionSet, documents) {
         fillResultClassMembers(nestedClass, s.selectionSet, documents);  
       }
       else {
-        fillUnionResultClassMembers(resultClass, nestedClass, s.selectionSet, documents);
+        fillUnionResultClassMembers(nestedClass, s.selectionSet, documents);
       }
     }
     else if (s.isField) {
@@ -285,7 +285,7 @@ function fillResultClassMembers(resultClass, selectionSet, documents) {
   });
 }
 
-function fillUnionResultClassMembers(resultClass, unionClass, selectionSet, documents) {
+function fillUnionResultClassMembers(unionClass, selectionSet, documents) {
   if (!selectionSet) {
     return;
   }
@@ -295,7 +295,7 @@ function fillUnionResultClassMembers(resultClass, unionClass, selectionSet, docu
     
     fillResultClassMembers(unionClassPart, s.selectionSet, documents);
     
-    resultClass.nestedClasses.push(unionClassPart);
+      unionClass.nestedClasses.push(unionClassPart);
   });
 
   unionClass.properties.push(
