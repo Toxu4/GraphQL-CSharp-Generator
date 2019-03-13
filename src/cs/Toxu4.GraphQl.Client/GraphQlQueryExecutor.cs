@@ -35,7 +35,9 @@ namespace Toxu4.GraphQl.Client
                 queryParamsBuilder.Append($"&variables={JsonConvert.SerializeObject(query.Variables)}");
             }
 
-            var str = await _httpClient.GetStringAsync($"{_endpoint}?{queryParamsBuilder}");
+            var str = await _httpClient
+                .GetStringAsync($"{_endpoint}?{queryParamsBuilder}")
+                .ConfigureAwait(false);
                 
             return JsonConvert.DeserializeObject<TResult>(str, JsonSerializerSettings);
         }
