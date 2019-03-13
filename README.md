@@ -37,7 +37,7 @@ cd .\MyCoolGraphqlApp
 
 npm i -g graphql.csharp.generator
 
-dotnet add package Toxu4.GraphQl.Client -v 1.0.15
+dotnet add package Toxu4.GraphQl.Client
 dotnet add package Microsoft.Extensions.DependencyInjection
 ```
 
