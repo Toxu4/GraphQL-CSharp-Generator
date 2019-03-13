@@ -1,6 +1,7 @@
 # GraphQL-CSharp-Generator
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2lbxr0qk6csiparf/branch/master?svg=true)](https://ci.appveyor.com/project/Toxu4/graphql-csharp-generator/branch/master)
+![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Toxu4.GraphQl.Client.svg)
 
 Generates c# classes to access GraphQl API. 
 
