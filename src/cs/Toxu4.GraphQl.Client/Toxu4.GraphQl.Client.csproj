@@ -1,6 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="..\..\..\build\common.props" />
+    
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <Description>GraphQL Api client</Description>
+        <AssemblyName>Toxu4.GraphQl.Client</AssemblyName>
+        <PackageId>Toxu4.GraphQl.Client</PackageId>        
     </PropertyGroup>
 
     <ItemGroup>

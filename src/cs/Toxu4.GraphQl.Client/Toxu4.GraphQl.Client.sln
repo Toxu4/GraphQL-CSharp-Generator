@@ -22,6 +22,18 @@ ProjectSection(SolutionItems) = preProject
 	..\..\js\Templates\Property.handlebars = ..\..\js\Templates\Property.handlebars
 EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{9C46C642-2E06-4E64-BBB3-058A6C7F5BA5}"
+ProjectSection(SolutionItems) = preProject
+	..\..\..\build\common.props = ..\..\..\build\common.props
+	..\..\..\build\pack.ps1 = ..\..\..\build\pack.ps1
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{0A1A8DF3-CBA8-41C8-B6D8-7EFB0FD96D1E}"
+ProjectSection(SolutionItems) = preProject
+	..\..\..\version.props = ..\..\..\version.props
+	..\..\..\appveyor.yml = ..\..\..\appveyor.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

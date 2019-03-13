@@ -1,0 +1,50 @@
+version: 7.0.{build}
+os: Visual Studio 2017
+clone_depth: 2
+configuration: Release
+
+pull_requests:
+  do_not_increment_build_number: true
+
+environment:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+init:
+- git config --global core.autocrlf input
+
+install:
+- ps: >-
+    set -name versionPrefix -scope global -value ([xml](Get-Content version.props)).Project.PropertyGroup.VersionPrefix
+    $env:versionPrefix = $versionPrefix
+    $env:package_suffix = "-alpha$env:appveyor_build_number"
+    update-appveyorbuild -Version "$env:versionPrefix$env:package_suffix"
+before_build:
+- ps: >-
+    cd src
+
+    dotnet restore -v Minimal
+build_script:
+- ps: dotnet build -c Release
+
+before_test:
+
+test_script:
+
+after_test:
+- ps: >-
+    cd ..
+    md -Name nupkg
+    .\build\pack.ps1
+skip_branch_with_pr: true
+skip_tags: true
+skip_commits:
+  files:
+  - '**/*.md'
+
+nuget:
+  disable_publish_on_pr: true
+
+artifacts:
+- path: nupkg\*.nupkg
+  name: nuget-package

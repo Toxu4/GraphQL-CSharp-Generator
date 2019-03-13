@@ -1,0 +1,14 @@
+<Project>
+    <Import Project="..\version.props" />
+    <PropertyGroup>
+        <PackageProjectUrl>https://github.com/Toxu4/GraphQL-CSharp-Generator</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/Toxu4/GraphQL-CSharp-Generator/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/Toxu4/GraphQL-CSharp-Generator</RepositoryUrl>
+        <Authors>Anton Krasilshchikov, Rambler Digital Solutions</Authors>
+        <Product>Toxu4.GraphQl.Client</Product>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+    </PropertyGroup>
+</Project>

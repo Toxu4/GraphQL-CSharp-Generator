@@ -25,9 +25,11 @@ namespace Toxu4.GraphQl.Client
         {
             _httpClient = httpClient;
             _endpoint = settings.Value.Endpoint;
-        }        
-        
-        public async Task<TResult> Run<TQuery, TResult>(TQuery query) where TQuery : IGraphQlQuery
+        }
+
+        public async Task<TResult> Run<TQuery, TResult>(TQuery query) 
+            where TQuery : IGraphQlQuery
+            where TResult : QueryResult<object>
         {
             var queryParamsBuilder = new StringBuilder($"query={query.QueryText}", 2);
             if (query.Variables.Any())
