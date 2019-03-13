@@ -1,18 +1,14 @@
 # Paths
 $packFolder = (Get-Item -Path "./nupkg" -Verbose).FullName
-$slnPath = (Get-Item -Path "./src/cs/Toxu4.GraphQl.Client" -Verbose).FullName
+$slnPath = (Get-Item -Path "./" -Verbose).FullName
+$srcPath = Join-Path $slnPath "src"
 
-Write-Host "sln", $slnPath
-Write-Host "pack", $packFolder
-
-$srcPath = $slnPath
+Write-Host "slnPath: $slnPath" 
 
 # List of projects
 $projects = (
-    ""
+    "Toxu4.GraphQl.Client"
 )
-
-$storedPath = Get-Location
 
 # Rebuild solution
 Set-Location $slnPath
@@ -30,17 +26,9 @@ foreach ($project in $projects) {
 
     # Copy nuget package
     $projectPackPath = Join-Path $projectFolder ("/bin/Release/" + $project + ".*.nupkg")
-    
-    Write-Host "From"
-    Write-Host $projectPackPath
-    Write-Host "To"
-    Write-Host $packFolder
-    
     Move-Item $projectPackPath $packFolder
+
 }
 
 # Go back to the pack folder
-Write-Host "stored", $storedPath
-Set-Location $storedPath
-
-dir ./nupkg
+Set-Location $slnPath
