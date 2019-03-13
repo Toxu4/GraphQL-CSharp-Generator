@@ -4,8 +4,6 @@ namespace Toxu4.GraphQl.Client
 {
     public interface IGraphQlQueryExecutor
     {
-        Task<TResult> Run<TQuery, TResult>(TQuery query) 
-            where TQuery : IGraphQlQuery
-            where TResult : QueryResult<object>;
+        Task<TResult> Run<TQuery, TResult>(TQuery query) where TQuery : IGraphQlQuery;
     }
 }
