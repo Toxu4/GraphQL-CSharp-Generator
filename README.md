@@ -1,5 +1,7 @@
 # GraphQL-CSharp-Generator
 
+[![Build status](https://ci.appveyor.com/api/projects/status/2lbxr0qk6csiparf/branch/master?svg=true)](https://ci.appveyor.com/project/Toxu4/graphql-csharp-generator/branch/master)
+
 Generates c# classes to access GraphQl API. 
 
 To use this tool you need to install npm package:

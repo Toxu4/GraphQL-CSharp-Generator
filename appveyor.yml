@@ -56,7 +56,4 @@ nuget:
 artifacts:
 - path: nupkg\*.nupkg
   name: nuget-packages
-
-before_deploy:
-- ps: >- 
-    Write-Host "Before deploy"
+  
