@@ -56,9 +56,7 @@ nuget:
 artifacts:
 - path: nupkg\*.nupkg
   name: nuget-packages
-  
-after_deploy:
-- ps: >-
-    ls
-    
-    Write-Host "qq $env:qq"
+
+before_deploy:
+- ps: >- 
+    Write-Host "Before deploy"
