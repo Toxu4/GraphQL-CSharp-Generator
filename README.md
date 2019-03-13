@@ -22,7 +22,7 @@ cd GraphQL-CSharp-Generator\sample\GraphQlServer
 dotnet run
 ```
 
-Sample GraphQl sample server will start. You can surf api using playground:
+Sample GraphQl server will start. You can surf api using playground:
 
 ```
 http://localhost:5000/ui/playground
