@@ -12,7 +12,7 @@ To get started with sample you need:
 - .net cli
 
 
-In your .net projects folder clone repository execute following commands:
+In your .net projects folder execute following commands:
 
 ```
 git clone https://github.com/Toxu4/GraphQL-CSharp-Generator.git
