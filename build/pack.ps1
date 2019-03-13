@@ -3,8 +3,6 @@ $storedFolder = Get-Location
 $packFolder = (Get-Item -Path "./nupkg" -Verbose).FullName
 $slnPath = (Get-Item -Path "./src/cs/" -Verbose).FullName
 
-Write-Host "slnPath: $slnPath" 
-
 # List of projects
 $projects = (
     "Toxu4.GraphQl.Client"
