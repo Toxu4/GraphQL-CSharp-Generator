@@ -1,6 +1,6 @@
 {
   "name": "graphql.csharp.generator",
-  "version": "1.0.12-beta",
+  "version": "1.0.13",
   "description": "C# code generator for GraphQL schema and query",
   "main": "",
   "bin": {
