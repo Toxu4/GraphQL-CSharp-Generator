@@ -35,7 +35,7 @@ namespace Toxu4.GraphQl.Client
                     t.Name == $"{typeNameToken.Value}Result");
 
             return implementationType != null 
-                ? token.ToObject(implementationType) 
+                ? token.ToObject(implementationType, serializer) 
                 : null;
         }
 
