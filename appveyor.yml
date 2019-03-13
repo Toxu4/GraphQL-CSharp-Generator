@@ -15,7 +15,10 @@ init:
 
 install:
 - ps: >-
-    ls
+    dir *.*
+    [xml](Get-Content version.props)
+    $p = ([xml](Get-Content version.props)).Project.PropertyGroup.VersionPrefix
+    $p
     set -name versionPrefix -scope global -value ([xml](Get-Content version.props)).Project.PropertyGroup.VersionPrefix
     $env:versionPrefix = $versionPrefix
     $env:package_suffix = "-alpha$env:appveyor_build_number"
