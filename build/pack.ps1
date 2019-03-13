@@ -5,14 +5,14 @@ $slnPath = (Get-Item -Path "./src/cs/Toxu4.GraphQl.Client" -Verbose).FullName
 Write-Host "sln", $slnPath
 Write-Host "pack", $packFolder
 
-dir *.*
-
 $srcPath = $slnPath
 
 # List of projects
 $projects = (
     ""
 )
+
+$storedPath = Get-Location
 
 # Rebuild solution
 Set-Location $slnPath
@@ -40,6 +40,6 @@ foreach ($project in $projects) {
 }
 
 # Go back to the pack folder
-Set-Location $slnPath
+Set-Location $storedPath
 
 dir *.*
