@@ -5,12 +5,14 @@ namespace Toxu4.GraphQl.Client
 {
     public static class RegistrationExtensions
     {
-        public static IServiceCollection AddGraphQlClient(this IServiceCollection serviceCollection, Action<GraphQlApiSettings> settings)
+        public static IServiceCollection AddGraphQlClient(this IServiceCollection serviceCollection, Action<GraphQlApiSettings> settings, Action<IHttpClientBuilder> httpClientBuilder = null)
         {
-            serviceCollection.Configure(settings);     
-            serviceCollection
-                .AddHttpClient<IGraphQlQueryExecutor, GraphQlQueryExecutor>()
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5));              
+            serviceCollection.Configure(settings);    
+            
+            var builder =  serviceCollection 
+                .AddHttpClient<IGraphQlQueryExecutor, GraphQlQueryExecutor>();
+            
+            httpClientBuilder?.Invoke(builder);
             
             return serviceCollection;
         }
