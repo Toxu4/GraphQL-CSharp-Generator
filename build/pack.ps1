@@ -2,7 +2,10 @@
 $packFolder = (Get-Item -Path "./nupkg" -Verbose).FullName
 $slnPath = (Get-Item -Path "./src/cs/Toxu4.GraphQl.Client" -Verbose).FullName
 
-Write-Host "sln", $slnPath 
+Write-Host "sln", $slnPath
+Write-Host "pack", $packFolder
+
+dir *.*
 
 $srcPath = $slnPath
 
