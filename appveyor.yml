@@ -15,7 +15,6 @@ init:
 
 install:
 - ps: >-
-    dir *.*
     [xml](Get-Content version.props)    
 before_build:
 - ps: >-
