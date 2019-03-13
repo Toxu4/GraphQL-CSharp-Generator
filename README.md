@@ -11,7 +11,7 @@ To use this tool you need to install npm package:
 npm install -g graphql.csharp.generator
 ```
 
-[WIP] and add nuget package into your c# project
+and add nuget package into your c# project
 
 ```
 dotnet add package Toxu4.GraphQl.Client
