@@ -40,6 +40,7 @@ foreach ($project in $projects) {
 }
 
 # Go back to the pack folder
+Write-Host "stored", $storedPath
 Set-Location $storedPath
 
 dir *.*
