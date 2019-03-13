@@ -1,8 +1,8 @@
 # GraphQL-CSharp-Generator
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2lbxr0qk6csiparf/branch/master?svg=true)](https://ci.appveyor.com/project/Toxu4/graphql-csharp-generator/branch/master)
-![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Toxu4.GraphQl.Client.svg)
-![npm](https://img.shields.io/npm/v/graphql.csharp.generator.svg)
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Toxu4.GraphQl.Client.svg)](https://www.nuget.org/packages/Toxu4.GraphQl.Client)
+[![npm](https://img.shields.io/npm/v/graphql.csharp.generator.svg)](https://www.npmjs.com/package/graphql.csharp.generator)
 
 ## Getting started
 
