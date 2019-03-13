@@ -38,7 +38,7 @@ test_script:
 
 after_test:
 - ps: >-    
-    cd ..
+    cd ..\..
 
     md -Name nupkg
 
