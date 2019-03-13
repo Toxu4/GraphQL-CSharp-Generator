@@ -30,9 +30,16 @@ foreach ($project in $projects) {
 
     # Copy nuget package
     $projectPackPath = Join-Path $projectFolder ("/bin/Release/" + $project + ".*.nupkg")
+    
+    Write-Host "From"
+    Write-Host $projectPackPath
+    Write-Host "To"
+    Write-Host $packFolder
+    
     Move-Item $projectPackPath $packFolder
-
 }
 
 # Go back to the pack folder
 Set-Location $slnPath
+
+dir *.*
