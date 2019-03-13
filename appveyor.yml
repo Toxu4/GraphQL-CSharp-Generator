@@ -37,10 +37,16 @@ before_test:
 test_script:
 
 after_test:
-- ps: >-    
+- ps: >-
+    dir *.*
+    
     cd ../../..
+    
+    dir *.*
 
     md -Name nupkg
+
+    dir *.*
 
     .\build\pack.ps1
 
