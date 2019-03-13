@@ -1,7 +1,7 @@
 # Paths
+$storedFolder = Get-Location
 $packFolder = (Get-Item -Path "./nupkg" -Verbose).FullName
-$slnPath = (Get-Item -Path "./cs/" -Verbose).FullName
-$srcPath = Join-Path $slnPath "src"
+$slnPath = (Get-Item -Path "./src/cs/" -Verbose).FullName
 
 Write-Host "slnPath: $slnPath" 
 
@@ -17,7 +17,7 @@ Set-Location $slnPath
 # Copy all nuget packages to the pack folder
 foreach ($project in $projects) {
     
-    $projectFolder = Join-Path $srcPath $project
+    $projectFolder = Join-Path $slnPath $project
 
     # Create nuget pack
     Set-Location $projectFolder
@@ -30,5 +30,5 @@ foreach ($project in $projects) {
 
 }
 
-# Go back to the pack folder
-Set-Location $slnPath
+# Go back to the stored
+Set-Location $storedFolder
