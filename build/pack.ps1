@@ -1,7 +1,10 @@
 # Paths
 $packFolder = (Get-Item -Path "./nupkg" -Verbose).FullName
 $slnPath = (Get-Item -Path "./" -Verbose).FullName
-$srcPath = Join-Path $slnPath "src"
+
+Write-Host "sln", $slnPath 
+
+$srcPath = Join-Path $slnPath "src/cs/Toxu4.GraphQl.Client"
 
 # List of projects
 $projects = (
