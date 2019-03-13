@@ -10,15 +10,16 @@ namespace Toxu4.GraphQl.Client
 {
     internal class GraphQlQueryExecutor : IGraphQlQueryExecutor
     {
-        private readonly HttpClient _httpClient;        
-        private readonly string _endpoint;
-        private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings
         {
             Converters = new List<JsonConverter>
             {
                 new AbstractClassConverter()
             }
         };
+        
+        private readonly HttpClient _httpClient;        
+        private readonly string _endpoint;      
 
         public GraphQlQueryExecutor(IOptions<GraphQlApiSettings> settings, HttpClient httpClient)
         {
@@ -36,7 +37,7 @@ namespace Toxu4.GraphQl.Client
 
             var str = await _httpClient.GetStringAsync($"{_endpoint}?{queryParamsBuilder}");
                 
-            return JsonConvert.DeserializeObject<TResult>(str, _jsonSerializerSettings);
+            return JsonConvert.DeserializeObject<TResult>(str, JsonSerializerSettings);
         }
     }
 }
