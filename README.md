@@ -91,10 +91,13 @@ namespace MyCoolGraphqlApp
 
             var (result, _) = queries.GetDrives(new GetDrivesQuery()).GetAwaiter().GetResult();
 
-            foreach (var drive in result.Drives.List){
+            foreach (var drive in result.Drives.List)
+            {
                 Console.WriteLine($"Drive: {drive.Name}");
-                foreach(var content in drive.Content){
-                    switch (content){
+                foreach(var content in drive.Content)
+                {
+                    switch (content)
+                    {
                         case GetDrivesQuery.Result.DrivesResult.ListResult.FolderTypeResult folder:
                             Console.WriteLine($"Folder: {folder.FullName}");
                             break;
