@@ -98,10 +98,10 @@ namespace MyCoolGraphqlApp
                 {
                     switch (content)
                     {
-                        case GetDrivesQuery.Result.DrivesResult.ListResult.FolderTypeResult folder:
+                        case GetDrivesQuery.Result.DrivesResult.ListResult.ContentResult.FolderTypeResult folder:
                             Console.WriteLine($"Folder: {folder.FullName}");
                             break;
-                        case GetDrivesQuery.Result.DrivesResult.ListResult.FileTypeResult file:
+                        case GetDrivesQuery.Result.DrivesResult.ListResult.ContentResult.FileTypeResult file:
                             Console.WriteLine($"File: {file.Name}");
                             break;                        
                     }
