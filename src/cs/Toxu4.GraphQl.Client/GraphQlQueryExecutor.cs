@@ -29,7 +29,7 @@ namespace Toxu4.GraphQl.Client
 
         public async Task<TResult> Run<TQuery, TResult>(TQuery query) where TQuery : IGraphQlQuery
         {
-            var queryParamsBuilder = new StringBuilder($"query={query.QueryText}", 2);
+            var queryParamsBuilder = new StringBuilder($"query={query.QueryText}");
             if (query.Variables.Any())
             {
                 queryParamsBuilder.Append($"&variables={JsonConvert.SerializeObject(query.Variables)}");
